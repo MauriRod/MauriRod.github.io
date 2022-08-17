@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <title>Encriptador de texto</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <h1 class="titulo-principal">Hola, bienvenido al Encriptador / Desencriptador!</h1>
+            <img src="imagen/Vector.png" class="imagen-a">
+        </header>
+        <main>
+            <section class="seccion1">
+                
+                <h2 class="titulos-secundarios">Ingrese aquí el texto</h2>
+                <textarea cols="50" rows="20" class="area" placeholder="Escriba aquí..."></textarea>
+                <div class="minusculas"><img src="imagen/Vector (1).png"><p>Por favor solo ingrese letras minusculas y sin acento</p></div>
+                <div class="botones">
+                    <input type="button" class="button_encriptar" value="ENCRIPTAR">
+                    <input type="button" class="button_desencriptar" value="DESENCRIPTAR">
+                </div>
+                
+                
+            </section>            
+            <section class="seccion2">
+                <div class="contenedor-munheco">
+                    <img src="imagen/Munheco.png" alt="munheco con una lupa"> 
+                </div>
+                <div class="contenedor-h3">
+                    <h3 class="titulos-secundarios">Ningún mensaje fue encontrado</h3>
+                </div>
+                <div class="parrafo">
+                    <p>Ingrese el texto que desee encriptar/desencriptar</p>
+                </div>
+                <div class="resultado">
+                    <h4 class="titulos-secundarios">Su mensaje ha sido encriptado/desencriptado</h4>
+                </div>
+                <div class="contenedor-copiar">
+                    <p id="textDesencripted"></p>
+                    <div id="popCopy"></div>
+                    <button id="copy" onclick="copy()">COPIAR</button>
+                </div>
+            </section>
+        </main>
+        <footer><p>Derechos reservados para alura</p>
+            <p> Hecho con ♥ por Mauricio Rodrigues</p>
+        </footer>
+    </body>
+    <script>
+        var btn_encriptar = document.querySelector(".button_encriptar");
+        var btn_desencriptar = document.querySelector(".button_desencriptar");
+        var munhecoOcultar = document.querySelector(".contenedor-munheco");
+        var tituloh3Ocultar = document.querySelector(".contenedor-h3");
+        var parrafoOcultar = document.querySelector(".parrafo");
+        var textoResultado = document.querySelector("#textDesencripted");
+
+
+        btn_encriptar.onclick = encriptar;
+        btn_desencriptar.onclick = desEncriptar;
+
+
+    function copy() {
+        var textArea = document.getElementById("textDesencripted");
+        var copyText = textArea.innerHTML;
+        navigator.clipboard.writeText(copyText);
+
+        let notify = document.getElementById("popCopy");
+        notify.innerHTML = "Copiado al portapapeles!";
+        notify.style.display = "block";
+        setTimeout(function() {
+            notify.style.display = "none";
+        }, 3000);
+    }
+    document.querySelector("#copy").addEventListener("click", copy);
+    function encriptar(){
+        var textoArea = document.querySelector(".area");
+        ocultarMunheco();
+        textoResultado.textContent = encriptacionDelTexto(getTexto());
+        textoArea.value = "";
+    } 
+    function desEncriptar(){
+        var textoArea = document.querySelector(".area");
+        ocultarMunheco();
+        textoResultado.textContent = desEncriptacionDelTexto(getTexto()); 
+        textoArea.value = "";
+    } 
+    function getTexto(){
+        var textoArea = document.querySelector(".area");
+        return textoArea.value;
+    }
+    function ocultarMunheco(){
+        munhecoOcultar.classList.add("ocultar");
+        tituloh3Ocultar.classList.add("ocultar");
+        parrafoOcultar.classList.add("ocultar");
+    }
+    function encriptacionDelTexto(frase){
+        var texto = frase;
+        var cambioTexto ="";
+        for(var i = 0; i < texto.length; i++){
+            if(texto[i] == "e"){
+                cambioTexto += "enter";
+            }
+            else if(texto[i] == "i"){
+                cambioTexto += "imes";
+            }
+            else if(texto[i] == "a"){
+                cambioTexto += "ai";
+            }
+            else if(texto[i] == "o"){
+                cambioTexto += "ober"
+            }
+            else if(texto[i] == "u"){
+                cambioTexto += "ufat"
+            }
+            else{
+                cambioTexto += texto[i];
+            }
+        }
+        return cambioTexto;
+    }
+    function desEncriptacionDelTexto(frase){
+        var texto = frase;
+        var cambioTexto ="";
+        for(var i = 0; i < texto.length; i++){
+            if(texto[i] == "e"){
+                cambioTexto += "e";
+                i+= 4;
+            }
+            else if(texto[i] == "i"){
+                cambioTexto += "i";
+                i+=3;
+            }
+            else if(texto[i] == "a"){
+                cambioTexto += "a";
+                i+=1;
+            }
+            else if(texto[i] == "o"){
+                cambioTexto += "o";
+                i+=3
+            }
+            else if(texto[i] == "u"){
+                cambioTexto += "u"
+                i+=3
+            }
+            else{
+                cambioTexto += texto[i];
+            }
+        }
+        return cambioTexto;
+    }
+    </script>
+</html>
